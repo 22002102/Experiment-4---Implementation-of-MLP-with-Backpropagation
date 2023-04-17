@@ -118,7 +118,72 @@ Normalize our dataset.
 8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
 
 ## PROGRAM 
+```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+data=pd.read_csv("/content/IRIS (1).csv")
+data.head()
 
+name=["sepal_length","sepal_width","petal_length","petal_width"]
+x=data.iloc[:,0:4]
+y=data.select_dtypes(include=[object])
+x.head()
+y.head()
+
+from sklearn import preprocessing
+label_encoder=preprocessing.LabelEncoder()
+data['species']=label_encoder.fit_transform(data['species'])
+data['species'].unique()
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.20)
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+scaler.fit(x_train)
+x_train=scaler.transform(x_train)
+x_test=scaler.transform(x_test)
+
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.neural_network import MLPClassifier
+mlp=MLPClassifier(hidden_layer_sizes=(10,10,10),max_iter=1000)
+mlp.fit(x_train,y_train.values.ravel())
+predictions=mlp.predict(x_test)
+print(predictions)
+
+print(confusion_matrix(y_test,predictions))
+print(classification_report(y_test,predictions))
+```
 ## OUTPUT 
 
+
+
+![01](https://user-images.githubusercontent.com/119091638/232502831-7e61de91-e7aa-41e6-b95e-7850d8b653f2.png)
+
+![02](https://user-images.githubusercontent.com/119091638/232502861-cc38458b-bafd-4b8c-8abd-c1fda5df1833.png)
+
+
+![03](https://user-images.githubusercontent.com/119091638/232502923-deaab0f7-2c7e-41b8-85d7-a93de3eb18c5.png)
+
+![04](https://user-images.githubusercontent.com/119091638/232502948-f491dcb3-5e02-4f55-af23-015c11086648.png)
+
+
+![05](https://user-images.githubusercontent.com/119091638/232502988-effb6cea-9e37-4902-88ce-afd351f4866e.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## RESULT
+
+Thus Implementation-of-MLP-with-Backpropagation problem is executed successfully.
